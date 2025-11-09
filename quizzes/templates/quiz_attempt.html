@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}{{ quiz.title }}{% endblock %}
+{% block content %}
+<h2 class="text-2xl font-bold mb-4">{{ quiz.title }}</h2>
+<p class="mb-4 text-gray-700">{{ quiz.description }}</p>
+
+<form method="POST" class="bg-white p-6 rounded-lg shadow-md">
+  {% csrf_token %}
+  <div class="mb-4">
+    <label class="font-semibold">Your Name:</label>
+    <input type="text" name="user_name" required class="border p-2 w-full rounded mt-1">
+  </div>
+
+  {% for question in questions %}
+  <div class="mb-6">
+    <p class="font-semibold">{{ forloop.counter }}. {{ question.text }}</p>
+    <div class="mt-2 space-y-1">
+      {% for ans in question.answers_set.all %}
+      <label class="block">
+        <input type="radio" name="{{ question.id }}" value="{{ ans.id }}" class="mr-2">
+        {{ ans.text }}
+      </label>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+
+  <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
+    Submit Quiz
+  </button>
+</form>
+{% endblock %}

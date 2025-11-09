@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Quiz List{% endblock %}
+{% block content %}
+<h2 class="text-2xl font-bold mb-4">Available Quizzes</h2>
+
+{% if quizzes %}
+<div class="grid md:grid-cols-2 gap-6">
+  {% for quiz in quizzes %}
+  <div class="bg-white shadow-md p-6 rounded-lg">
+    <h3 class="text-xl font-semibold">{{ quiz.title }}</h3>
+    <p class="text-gray-600 mb-3">{{ quiz.description }}</p>
+    <a href="{% url 'quiz_attempt' quiz.id %}" class="bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700">
+      Start Quiz
+    </a>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p>No quizzes available yet.</p>
+{% endif %}
+{% endblock %}
